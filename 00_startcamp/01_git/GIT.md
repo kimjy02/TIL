@@ -3,11 +3,11 @@
 - 분산 **버전 관리 시스템**
   - 버전 관리 : 변화를 기록하고 추적하는 것
     - **버전 관리 반드시 해야 함**
-    ![집 버전 관리](이미지/house.png)
+    ![집 버전 관리](../이미지/house.png)
   - **중앙 vs. 분산** 
     - 중앙 집중식
       - 버전은 중앙 서버에 저장되고 중앙 서버에서 파일을 가져와 다시 중앙에 업로드
-      ![중앙 집중식](이미지/center.png)
+      ![중앙 집중식](../이미지/center.png)
     - 분산식
       - 버전을 여러 개의 복제된 저장소에 저장 및 관리
       - 중앙 서버를 사용하지 못하는 상황이라도, 복제된 다른 저장소를 이용해 파일 사용 가능
@@ -21,7 +21,7 @@
       -인터넷에 연결되지 않은 환경에서도 작업 계속 가능
         - 변경 이력과 코드를 로컬 저장소에 기록 / 나중에 중앙 서버와 동기화
 
-        ![분산식](이미지/var.png)
+        ![분산식](../이미지/var.png)
 
 ## Git의 영역
 ### 1. Working Directory
@@ -40,13 +40,13 @@
 1. git init
   - 로컬 저장소 설정(초기화)
   - git의 버전 관리를 시작할 디렉토리에서 진행
-  ![folder](이미지/folder_study.png)
+  ![folder](../이미지/folder_study.png)
   - `$ git init`
 2. git add
   - 변경사항이 있는 파일을 staging area에 추가
   - `$git add 00_startcamp/01_git/markdown.md`
   - 아래 명령어로 저장된 파일과 저장되지 않은 파일 확인
-  ![git status](이미지/git%20status.png)
+  ![git status](../이미지/git%20status.png)
   - staging area에 저장된 파일 수정 시, `git status` 입력 시 변경된 사항 설명됨
   - 실수로 필요없는 파일 추가로 인해 제거해야 할 상황
     - `git restore --staged <file>...`
@@ -55,14 +55,14 @@
   - 해당 시점의 버전을 생성하고 변경 이력을 남기는 것
   - `git commit` 오류 코드
 
-    ![git commit](이미지/git%20commit%20오류%20코드.png)
+    ![git commit](../이미지/git%20commit%20오류%20코드.png)
   - `git config --global user.email "02kimjy@naver.com"`
   - `git config --global user.name "김주연"`
   - `git config --global --list`
   - `--global`로 저장해서 컴퓨터 자체에 저장되어 있으므로 한 번만 입력해도 됨
   - 여러 개의 계정으로 git을 관리해야 할 경우, local로 이용(찾아보기)
 
-    ![git commit](이미지/git%20commit%20코드.png)
+    ![git commit](../이미지/git%20commit%20코드.png)
   - `code ~/.gitconfig` : 이메일과 이름 수정 코드
 
 ## **git은 로컬 저장소 내 모든 파일의 '변경사항'을 감시하고 있다.**
