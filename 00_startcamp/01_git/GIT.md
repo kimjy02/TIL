@@ -80,3 +80,14 @@
 1. `git remote add origin url`
   - url을 origin이라는 이름으로 추가
   
+2. `git pull`
+  - 가져오기
+- 순서
+  1. `git init`
+  2. 작업
+  3. `git add`
+  4. `git commit`
+  5. `git push`
+  6. `git pull`
+
+**commit 이름 설정 시, 수정사항이 무엇인지, 주 목적이 무엇인지 표현하기**
