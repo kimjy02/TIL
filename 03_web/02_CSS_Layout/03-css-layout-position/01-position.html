@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 1500px;
+    }
+
+    .container {
+      position: relative;
+      margin: 30px;
+      height: 300px;
+      width: 300px;
+      border: 1px solid black;
+    }
+
+    .box {
+      height: 100px;
+      width: 100px;
+      border: 1px solid black;
+    }
+
+    .static {
+      /* position: static; */
+      background-color: lightcoral;
+    }
+
+    .absolute {
+      /* 본인이 차지하고 있던 공간 없앰 -> 다음 박스가 공간을 채움 */
+      /* 전체 틀의 좌측상단의 꼭짓점을 기준으로 상 100px 좌 100px만큼 공간 생성*/
+      position: absolute;
+      background-color: lightgreen;
+      top: 100px;
+      left: 100px;
+    }
+
+    .relative {
+      /* 본인이 차지하고 있던 공간을 유지 -> 다음 박스가 공간을 채우지 못함 */
+      /* 본인 박스의 좌측상단의 꼭짓점을 기준으로 상 100px 좌 100px만큼 공간 생성 */
+      position: relative;
+      background-color: lightblue;
+      top: 100px;
+      left: 100px;
+    }
+
+    .fixed {
+      position: fixed;
+      background-color: gray;
+      top: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="box static">Static</div>
+    <div class="box absolute">Absolute</div>
+    <div class="box relative">Relative</div>
+    <div class="box fixed">Fixed</div>
+  </div>
+</body>
+
+</html>
