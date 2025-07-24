@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    /* flex는 자식요소들에 대해서 처리하는 것. */
+    .container {
+      width: 200px;
+      /* height: 200px; */
+      padding: 10px;
+      border: 1px solid black;
+    }
+
+    img {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+    }
+
+    .name {
+      height: 40px;
+      width: 200px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      background-color: rgb(255, 160, 122, 0.5);
+      font-size: 20px;
+      font-weight: bold;
+      position: absolute;
+      top: 160px;
+    }
+  </style>
+  <div class="container">
+    <div>
+      <img src="image.png" alt="Profile Image">
+      <p class="name">Name</p>
+    </div>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci unde officiis ad nostrum. Laboriosam mollitia similique provident fuga tenetur saepe sit, amet eaque neque eius quaerat expedita ea illum veniam.</p>
+  </div>
+</body>
+</html>
