@@ -267,5 +267,96 @@ console.log(Object.values(profile)) // ['Alice', 30]
 ```
 
 #### 7. Optional chaining('?.')
+- 속성이 없는 중첩 객체를 에러 없이 접근할 수 있는 방법
+- 만약 참조 대상이 null 또는 undefined라면 에러가 발생하는 대신 평가를 멈추고 undefined를 반환
+```javascript
+cost user = {
+  name: 'Alice',
+  greeting: function () {
+    return 'hello'
+  }
+}
+
+console.log(user.address.street) // Uncaught TypeError
+console.log(user.address?.street) // undefined
+console.log(user.nonMethod()) // Uncaught TypeError
+console.log(user.nonMethod?.()) // undefined
+```
+
+- 만약 Optional chaining을 사용하지 않는다면 다음과 같이 '&&' 연산자를 사용해야 함
+```javascript
+const user = {
+  name: 'Alice',
+  greeting: function () {
+    return 'hello'
+  }
+}
+console.log(user.address && user.address.street) // undefined
+```
+
+##### 7. Optional chaining 장점
+- 참조가 누락될 가능성이 있는 경우 연결된 속성으로 접근할 때 더 짧고 간단한 표현식을 작성할 수 있음
+- 어떤 속성이 필요한지에 대한 보증이 확실하지 않는 경우에 객체의 내용을 보다 편리하게 탐색할 수 있음
+
+##### 7. Optional chaining 주의사항
+1. Optional chaining은 존재하지 않아도 괜찮은 대상에만 사용해야 함(남용X)
+  - 왼쪽 평가대상이 없어도 괜찮은 경우에만 선택적으로 사용
+  - 중첩 객체를 에러 없이 접근하는 것이 사용 목적이기 때문
+```javascript
+// 이전 예시 코드에서 user 객체는 논리상 반드시 있어야 하지만 address는 필수 값이 아님
+// user에 값을 할당하지 않은 문제가 있을 때 바로 알아낼 수 있어야 하기 때문
+
+// Bad
+user?.address?.street
+
+// Good
+user.address?.street
+```
+2. Optional chaining 앞의 변수는 반드시 선언되어 있어야 함
+```javascript
+console.log(myObj?.address) // Unccaught ReferenceError: myObj is not defined
+```
+
+##### 7. Optional chaining 정리
+1. `obj?.prop`
+  - obj가 존재하면 obj.prop을 반환하고, 그렇지 않으면 undefined를 반환
+2. `obj?.[prop]`
+  - obj가 존재하면 obj[prop]을 반환하고, 그렇지 않으면 undefined를 반환
+3. `obj?.method()`
+  - obj가 존재하면 obj.method()를 호출하고, 그렇지 않으면 undefined를 반환
 
 ### new 참고 시험 안 나옴
+
+## 배열
+### 개요
+#### Object
+- 키로 구분된 데이터 집합(data collection)을 저장하는 자료형
+- > 이제는 순서가 있는 collection이 필요
+
+#### Array
+- 순서가 있는 데이터 집합을 저장하는 자료구조
+
+#### 배열 구조
+- 대괄호('[]')를 이용해 작성
+- 요소 자료형 : 제약 없음
+- length 속성을 사용해 배열에 담긴 요소가 몇 개인지 알 수 있음
+```javascript
+const names = ['Alice', 'Bella', 'Cathy']
+
+console.log(names[0]) //Alice
+console.log(names[1]) //Bella
+console.log(names[2]) //Cathy
+
+console.log(names.length) // 3
+```
+
+### 배열 메서드
+#### 주요 메서드
+- push / pop
+  - 배열 끝 요소를 추가 / 제거
+- unshift / shift
+  - 배열 앞 요소를 추가 / 제거
+
+### Array helper method
+#### Array Helper Methods
+- 배열 조작을 보다 쉽게 수행할 수 있는 특별한 메서드 모음
