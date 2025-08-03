@@ -4,50 +4,29 @@
 # sys.stdin = open("input.txt", 'r')
 #
 # N = sys.stdin.readline()
-from collections import deque
 
 
 
-N = int(input())
-sum = 0
+for t in range(10):
+    side = int(input()) # 100
+    # 정사각형 테이블 데이터
+    data = [list(map(int, input().split())) for _ in range(side)]
+    answer = 0 # 교착 상태 개수
 
-for i in range(0, N):
-    matrix = (list(map(int, input().split())))
-    queue = deque()
-    for num in matrix:
-        if num == 1 or num == 2:
-            queue.append(num)
-        else:
-            pass
-    while (queue[0] == 2):
-        queue.popleft()
-    while (queue[-1] == 1):
-        queue.pop()
+    # 0부터 99까지 순회
+    for i in range(side):
+        # 1(N극)이 나오면 넣을 stack
+        stack = []
+        # 정사각형 테이블의 행 하나씩 순회
+        for row in data:
+            if row[i] == 1:
+                stack.append(row[i])
 
-    i = 0
-    cnt = 0
+            # 2(S극)이 나오고, stack이 비어있지 않은 경우
+            elif (row[i] == 2) and stack:
+                # 교착 상태 개수 +1
+                answer += 1
+                # stack 초기화
+                stack = []
 
-    while i < len(queue) - 1 :
-        if (queue[i] == 1 and queue[i+1] == 2) or (queue[i] == 2 and queue[i+1] == 1):
-            queue = deque(list(queue)[:i] + list(queue)[i+1:])
-            cnt += 1
-        else:
-            i += 1
-            pass
-    sum += cnt
-    print(f'{queue} {cnt}')
-
-print(sum)
-
-# magnetic()
-
-
-    # for
-    # stack = []
-    # for int in list:
-    #     if int == 1 or int == 2:
-    #         stack.append(int)
-    #     else:
-    #         pass
-    # print(stack)
-
+    print(f"#{t+1} {answer}")
