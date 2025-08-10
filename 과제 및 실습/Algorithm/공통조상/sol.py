@@ -86,17 +86,17 @@ for tc in range(1, T+1):
 
     for i in range(0, len(info), 2):       # 인접 리스트 생성
         adj_list[info[i]].append(info[i+1])
-    # print(adj_list)
+    print(adj_list)
 
     parent = [[] for i in range(2)]
     # print(parent)
     forefather_N(N)
     forefather_M(M)
-    # print(parent)
+    print(parent)
 
     for i in range(-1, -(min(len(parent[0]),len(parent[1]))+1), -1):
         if min(len(parent[0]),len(parent[1])) == 1:
-            nearest_node = parent[0][i + 1]
+            nearest_node = parent[0][i]
             break
         if parent[0][i] == parent[1][i]:
             pass
