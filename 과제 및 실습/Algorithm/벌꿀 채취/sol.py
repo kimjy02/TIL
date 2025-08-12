@@ -36,19 +36,20 @@
 import sys
 sys.stdin = open('sample_input.txt')
 
-import itertools
-
-def select_hive(N, M, C, list):
-    total = []
+def select_hive(N, M, C, lst):
+    global total
+    hive_select = []
     stack = []
-    for row in list:
+    for row in lst:
         for i in range(N+M-2):
-            if row[i]+row[i+1] <= C:
-                if
-                total.append(list[i])
-
-                stack.append(i)
-                stack.append(i+1)
+            if sum(lst[i:i+M+1]) <= C:
+                total[1] = max(total[1], sum(lst[i:i+M+1]))
+                total = sorted(total, reverse = True)
+                hive_select.append(lst[i:i+M+1])
+                for j in range(i, i+M+1):
+                    if j in stack:
+                        break
+                    stack.append(list(range(i,i+M+1)))
 
 T = int(input())
 for tc in range(1, T+1):
@@ -58,4 +59,7 @@ for tc in range(1, T+1):
     for i in range(N):
         hive[i] = list(map(int, input().split()))
     print(hive)
+    total = [0,-1]
+    select_hive(N, M, C, hive)
+    print()
 
