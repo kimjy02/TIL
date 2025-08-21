@@ -40,8 +40,8 @@
     출력
         - #{tc} {주어진 사람 그래프에서 사람들의 CC 값들 중에서 최솟값}
 '''
-import sys
-sys.stdin = open('input.txt')
+# import sys
+# sys.stdin = open('input.txt')
 
 def floyd_warshall(graph):
     n = len(graph)
@@ -63,7 +63,10 @@ INF = float('inf')
 
 for tc in range(1, T+1):
     N, *data = map(int, input().split())
+    # print(N)
+    # print(*data)
     adj_matrix = [data[i:i+N] for i in range(0, len(data), N)]
+    # print(adj_matrix)
     for i in range(N):
         for j in range(N):
             if i !=j and adj_matrix[i][j] == 0:
