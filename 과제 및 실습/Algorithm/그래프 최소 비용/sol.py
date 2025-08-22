@@ -58,5 +58,5 @@ for tc in range(1, T+1):
         for i in row:
             # print(i)
             max_value = max(max_value, i)
-     
+
     print(f'#{tc} {max_value}')

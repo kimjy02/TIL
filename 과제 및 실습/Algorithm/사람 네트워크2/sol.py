@@ -40,8 +40,8 @@
     출력
         - #{tc} {주어진 사람 그래프에서 사람들의 CC 값들 중에서 최솟값}
 '''
-# import sys
-# sys.stdin = open('input.txt')
+import sys
+sys.stdin = open('input.txt')
 
 def floyd_warshall(graph):
     n = len(graph)
