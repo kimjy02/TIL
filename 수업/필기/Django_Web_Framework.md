@@ -206,6 +206,7 @@ $ pip freeze > requirements.txt
 
 ### Project & App
 #### 프로젝트와 앱
+```
 Project
  -----------------------
 |   app A     app B     |
@@ -216,6 +217,7 @@ Project
 |   -----     ------    |
 |                       |
  -----------------------
+```
 
  #### Django project
  - 애플리케이션의 집합(DB 설정, URL 연결, 전체 앱 설정 등을 처리)
@@ -343,9 +345,380 @@ Project
 - > 네트워크 상에 리소스가 어디 있는지를 알려주기 위한 약속
 - `http://www.example.com:80/path/to/myfile.html?key1=value1&key2=value2#SomewhereInTheDocument`
   - Scheme : `http`
-  p. 91
   - Domain Name : `www.example.com`
   - Port : `80`
   - Path to the file : `/path/to/myfile.html`
   - Parameters : `?key1=value1&key2=value2`
   - Anchor : `#SomewhereInTheDocument`
+
+#### Schema (or Protocol)
+- 브라우저가 리소스를 요청하는 데 사용해야 하는 규약
+- URL의 첫 부분은 브라우저가 어떤 규약을 사용하는지를 나타냄
+- 기본적으로 웹은 http(s)를 요구하며 메일을 열기 위한 mailto:, 파일을 전손하기 위한 ftp: 등 다른 프로토콜도 존재
+
+#### Domain Name
+- 요청 중인 웹 서버를 나타냄
+- 어떤 웹 서버가 요구되는지를 가리키며 직접 IP 주소를 사용하는 것도 가능하지만, 사람이 외우기 어렵기 때문에 주로 Domain Name으로 사용
+- 예를 들어 도메인 google.com의 IP 주소는 142.251.42.142
+
+#### Port
+- 웹 서버의 리소스에 접근하는데 사용되는 기술적인 문(Gate)
+- HTTP 프로토콜의 표준 포트
+  - HTTP - 80
+  - HTTPS - 443
+- 표준 포트만 작성 시 생략 가능
+
+#### Path
+- 웹 서버의 리소스 경로
+- 초기에는 실제 파일이 위치한 물리적 위치를 나타냈지만, 오늘날은 실제 위치가 아닌 추상화된 형태의 구조를 표현
+- 예를 들어 /articles/create/라는 주소가 실제 articles 폴더 안에 create 폴더 안을 나타내는 것은 아님
+
+#### Parameter
+- 웹 서버에 제공하는 추가적인 데이터
+- '&' 기호로 구분되는 key-value 쌍 목록
+- 서버는 리소스를 응답하기 전에 이러한 파라미터를 사용하여 추가 작업을 수행할 수 있음
+
+#### Anchor
+- 일종의 "북마크"를 나타내며 브라우저에 해당 지점에 있는 콘텐츠를 표시
+- fragment identifier(부분 식별자)라고 부르는 '#' 이후 부분은 서버에 전송되지 않음
+- `hhtps://docs.djangoproject.com/en/5.2/intro/install/#quick-install-guide` 요청에서 `#quick-install-guide`는 서버에 전달되지 않고 브라우저에게 해당 지점으로 이동할 수 있도록 함
+
+### 자원의 행위
+#### HTTP Request Methods
+- 리소스에 대한 행위(수행하고자 하는 동작)를 정의
+- > HTTP verbs 라고도 함
+
+#### 대표 HTTP Request Methods
+1. GET
+  - 서버에 리소스의 표현을 요청
+  - GET을 사용하는 요청은 데이터만 검색해야 함
+
+2. POST
+  - 데이터를 지정된 리소스에 제출
+  - 서버의 상태를 변경
+
+3. PUT
+  - 요청한 주소의 리소스를 수정
+
+4. DELETE
+  - 지정된 리소스를 삭제
+
+#### HTTP response status codes
+- 특정 HTTP 요청이 성공적으로 완료되었는지 여부를 나타냄
+
+#### HTTP response status codes
+- 5개의 응답 그룹
+  1. 100-199 (Informational responses, 정보성 응답)
+    - 요청은 정상적으로 수신되었고, 계속 진행해도 된다는 임시 응답
+    - 예 : 100 Continue, 101 Switching Protocols
+  2. 200-299 (Successful responses, 성공 응답)
+    - 요청이 성공적으로 처리되었다는 뜻
+    - 예
+      - 200 OK : 요청 성공
+      - 201 Created : 새로운 리소스가 생성됨
+      - 204 No Content : 성공했지만 응답 데이터 없음
+  3. 300-399 (Redirection messages, 리다이렉션)
+    - 클라이언트가 요청한 리소스가 다른 곳에 있다는 뜻 -> 다른 URL로 이동 필요
+    - 예
+      - 301 Moved Permanently : 영구 이동
+      - 302 Found : 임시 이동
+      - 304 Not Modified : 캐시 사용해도 됨
+  4. 400-499 (Client error responses, 클라이언트 오류)
+    - 요청에 문제가 있어서 서버가 처리할 수 없다는 뜻
+    - 예
+      - 400 Bad Request : 잘못된 요청
+      - 401 Unauthorized : 인증 필요
+      - 403 Forbidden : 권한 없음
+      - 404 Not Found : 해당 리소스 없음
+5. 500-599 (Server error responses, 서버 오류)
+  - 서버 쪽에서 요청은 이해했지만 내부 문제로 처리 실패
+  - 예
+    - 500 Internal Server Error : 서버 내부 오류
+    - 502 Bad Gateway : 게이트웨이 문제
+    - 503 Service Unavailable : 서버 과부하 / 점검 중
+    - 504 Gateway Timeout : 게이트웨이 응답 시간 초과
+
+### 자원의 표현
+#### 현재 Django가 응답(자원을 표현)하는 것
+- Django는 Full Stack framework에 속하기 때문에 기본적으로 사용자에게 페이지(html)를 응답한다.
+- 하지만 서버가 응답할 수 있는 것은 페이지뿐만 아니라 다양한 데이터 타입을 응답할 수 있음
+- REST API는 이 중에서도 <span style='color:red'>JSON</span> 타입으로 응답하는 것을 권장
+
+#### 응답 데이터 타입의 변화
+- 페이지(html)만을 응답했던 서버
+- 이제는 JSON 데이터를 응답하는 REST API 서버로의 변환
+- Django는 더 이상 Template 부분에 대한 역할을 담당하지 않게 되며, 본격적으로 Front-end와 Back-end가 분리되어 구성됨
+- 이제부터 Django를 사용해 RESTful API 서버를 구축할 것
+
+## 요청과 응답
+### DRF
+#### Django REST framework (DRF)
+- Django에서 RESTful API 서버를 쉽게 구축할 수 있도록 도와주는 오픈소스 라이브러리
+
+### Django URLs
+#### Django와 요청 & 응답
+```
+                         ---------------------------------------------------
+                        |                                    Django 프로젝트 |
+                     ---------                                              |
+                    |         |                                             |
+                    |         |                                             |
+      요청  -------->| urls.py |\ 2 ------------------------------------     |
+                    |         | \ |                app                 |    |
+                    |         |  \|                                    |    |
+                     ---------    |↘ ----------                        |    |
+                        |         | |          |          -----------  |    |
+                        |         | |          |         |           | |    |
+                        |         | |          | <-----> | models.py | |    |
+                        |         | |          |         |           | |    |
+                        |         | | views.py |          -----------  |    |
+                        |         | |          |          -----------  |    |
+                        |         | |          |         |           | |    |
+      응답 <-------------------------|          | <-----> | templates | |    |
+                        |         | |          |         |           | |    |
+                        |         |  ----------           -----------  |    |
+                        |         |                                    |    |
+                        |          ------------------------------------     |
+                         ---------------------------------------------------
+```
+
+#### 요청과 응답에서 Django URLs의 역할
+
+![요청과 응답에서 Django URLs의 역할](./Django/role_of_Django_URLs.png)
+
+#### URL dispatcher (운항 관리자, 분배기)
+- URL 패턴을 정의하고 해당 패턴이 일치하는 요청을 처리할 view함수를 연결(매핑)
+
+#### 1. URLs
+```python
+# urls.py
+
+from django.contrib import admin
+from django.urls import path
+from articles import views ## 중요
+# articles 패키지에서 views모듈을 가져오는 것
+
+urlpatterns = [
+  path('admin/', admin.site.urls),
+  path('index/', views.index),  ## 중요
+  # url 경로는 반드시 '/'(slash)로 끝나야 함
+]
+```
+- `http://127.0.0.1:8000/index/`로 요청이 왔을 떄 views 모듈의 view 함수 index를 호출
+
+#### Django와 요청 & 응답
+![Django와 요청 & 응답](./Django/Django_and_request_response.png)
+
+#### 2. View
+```python
+# views.py
+
+from django.http import JsonResponse
+from rest_framework.decorators import api_view
+
+# Create your views here.
+@api_view(["GET"])
+def index(request):
+  return JsonResponse({"message": "Hello, world!"})
+```
+- Json 응답 객체를 반환하는 index view 함수 정의
+- <span style='color:red'> 모든 view 함수는 첫번째 인자로 request 요청 객체를 필수적으로 받음 </span>
+- <span style='color:red'> 매개변수 이름이 request가 아니어도 되지만 그렇게 작성하지 않음 </span>
+  
+#### @api_view()
+- DRF view 함수에서는 <span style='color:red'> 필수로 작성 </span>되며 view 함수를 실행하기 전 HTTP 메서드를 확인
+- 기본적으로 GET 메서드만 허용되며 다른 메서드 요청에 대해서는 **405 Method Not Allowed**로 응답
+- DRF view 함수가 응답해야 하는 HTTP 메서드 목록을 작성
+
+#### JsonResponse()
+- Django에 내장된 HTTP 응답 클래스
+- 첫번째 위치 인자로 JSON으로 변환 가능한 데이터를 받아와 응답 객체를 반환해준다.
+- <span style='color:red'> 필요시 http response의 응답 코드도 설정하여 반환 가능 </span>
+
+  ```python
+  from django.http import JsonResponse
+  from rest_framework.decorators import api_view
+
+  # Create your views here.
+  @api_view(["GET", "POST"])
+  def index(request):
+    if request.method == "POST":
+      return JsonResponse({"data" : request.data})
+    return JsonResponse({"message" : "Hello, world!"})
+  ```
+- view 함수의 첫번째 인자 request는 httpRequest 객체를 받아 옵니다.
+- HTTP 메소드, 요청 데이터, 사용자 정보 등 request 객체를 활용하여 요청 데이터를 처리하고 적절한 응답을 생성할 수 있습니다.
+
+### 변수와 URL
+#### 현재 URL 관리의 문제점
+- 템플릿의 많은 부분이 중복되고, URL의 일부만 변경되는 상황이라면 계속해서 비슷한 URL과 함수를 작성해 나가야 할까?
+  ```python
+  urlpatterns = [
+    path('articles/1/', ...),
+    path('articles/2/', ...),
+    path('articles/3/', ...),
+    path('articles/4/', ...),
+    path('articles/5/', ...),
+  ]
+  ```
+
+#### Variable Routing
+- URL 일부에 변수를 포함시키는 것
+- (변수는 view 함수의 인자로 전달할 수 있음)
+
+#### Variable routing 작성법
+- <path_converter : variable_name>
+  ```python
+  path('articles/<int:num>/', views.detail)
+  path('hello/<str:name>/', views.greeting)
+  ```
+
+#### Path converters
+- URL 변수의 타입을 지정
+- (str, int 등 5가지 타입 지원)
+
+#### Variable routing 실습
+```python
+# urls.py
+
+urlpatterns = [
+  path('hello/<str:name>/', views.greeting),
+]
+
+# views.py
+
+@api_view(["GET"])
+def greeting(request, name):
+  context = {
+    'name' : name,
+  }
+  return JsonResponse(context)
+```
+```python
+# urls.py
+
+urlpatterns = [
+  path('articles/<int:num>/', views.detail),
+]
+
+# views.py
+@api_view(["GET"])
+def detail(request, num):
+  context = {
+    'num' : num,
+  }
+  return JsonResponse(context)
+```
+
+### App과 URL
+#### App URL mapping
+- 각 앱에 URL을 정의하는 것
+- > 프로젝트와 각 앱이 URL을 나누어 관리를 편하게 하기 위함
+
+#### 2번째 앱 pages 생성 후 발생할 수 있는 문제
+- view 함수 이름이 같거나 같은 패턴의 URL 주소를 사용하게 되는 경우
+- 아래 코드와 같이 해결해 볼 수 있으나 더 좋은 방법이 필요
+- > <span style='color:red'> "URL을 각자 app에서 관리하자" </span>
+  ```python
+  # firstpjt/urls.py
+
+  from articles import views as articles_views
+  from pages import views as pages_views
+
+  urlpatterns = [
+    ...,
+    path('pages', pages_views.index),
+  ]
+  ```
+
+#### 변경된 url 구조
+![변경된 url 구조](./Django/changed_url_structure.png)
+
+#### url 구조 변화
+```python
+# firstpjt/urls.py
+
+from django.urls import path, include
+
+urlpatterns = [
+  path('admin/', admin.site.urls),
+  # path('articles/<int:num>/', views.detail),
+  # path('hello/<str:name>/', views.greeting),
+  # path('index/', view.index),
+
+  path('articles/', include('articles.urls')),
+  path('pages/', include('pages.urls')),
+]
+```
+```python
+# articles/urls.py
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+  path('index/', views.index),
+  path('<int:num>/', views.detail),
+  path('hello/<str:name>/', view.greeting),
+]
+```
+```python
+# pages/urls.py
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+  path('index/', views.index),
+]
+```
+
+#### include()
+- 프로젝트 내부 앱들의 URL을 참조할 수 있도록 매핑하는 함수
+- > URL의 일치하는 부분까지 잘라내고, 남은 문자열 부분은 후속 처리를 위해 include된 URL로 전달
+
+#### Include 적용
+- 변경된 프로젝트의 urls.py
+```python
+# firstpjt/urls.py
+
+from django.urls import path, include
+
+urlpatterns = [
+  path('admin/', admin.site.urls),
+  path('articles/', include('articles.urls')),
+  path('pages/', include('pages.urls')),
+]
+```
+
+### 참고
+#### View 함수의 request
+- 클라이언트로부터 서버로 전달된 모든 정보를 포함하는 객체
+- request 객체는 Django의 HttpRequest 클래스를 기반으로 함
+
+#### MTV 디자인 패턴 정리
+- Model
+  - 데이터와 관련된 로직을 관리
+  - 응용프로그램의 데이터 구조를 정의하고 데이터베이스의 기록을 관리
+- Template
+  - 레이아웃과 화면을 처리
+  - 화면상의 사용자 인터페이스 구조와 레이아웃을 정의
+- View
+  - Model & Template과 관련한 로직을 처리해서 응답을 반환
+  - 클라이언트의 요청에 대해 처리를 분기하는 역할
+- View 예시
+  - 데이터가 필요하다면 model에 접근해서 데이터를 가져오고,
+  - 가져온 데이터를 template으로 화면을 구성하고,
+  - 구성된 화면을 응답으로 만들어 클라이언트에게 반환
+
+#### 지금까지 나온 Django의 규칙
+1. `urls.py`에서 각 url 경로는 반드시 '/'로 끝남
+2. `views.py`에서 모든 view 함수는 첫번째 인자로 요청 객체를 받음
+  - 매개변수 이름은 반드시 request로 저장
+3. Django는 정해진 경로에 있는 template 파일만 읽어올 수 있음
+  - app폴더/templates/ 이후
+
+#### 프레임워크의 규칙
+- 프레임워크를 사용할 때는 일정한 규칙을 따라야 하며 이는 저마다의 설계 철학이나 목표를 반영하고 있음
+  - 일관성 유지, 보안 가오하, 유지보수성 향상, 최적화 등과 같은 이유
+- > 프레임워크는 개발자에게 도움을 주는 도구와 환경을 제공하기 위해 규칙을 정해 놓은 것이며 우리는 이를 잘 활용하여, 특정 기능을 구현하는 방법을 표준화하고 개발 프로세스를 단순화할 수 있도록 해야 함

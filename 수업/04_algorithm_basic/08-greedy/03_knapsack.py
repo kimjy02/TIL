@@ -23,10 +23,13 @@ def fractional_knapsack_greedy(capacity, items):
         if remain_capacity >= weight:
             remain_capacity -= weight
             result += value
+            print(result)
         # 나눠서 담아야 하는 경우
         else:
             fraction = remain_capacity / weight
-            result += value + fraction
+            print(fraction)
+            result += value * fraction
+            print(result)
             remain_capacity = 0
     return result
 
