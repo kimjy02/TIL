@@ -15,6 +15,7 @@ class DisjointSet:
     def union(self, x, y):
         px = self.find_set(x)  # 노드 x의 대표자(부모) 찾기
         py = self.find_set(y)  # 노드 y의 대표자(부모) 찾기
+        print(f"px : {px}, py : {py}")
 
         if px != py:
             if self.rank[px] < self.rank[py]:
@@ -54,6 +55,10 @@ def mst_kruskal(vertices, edges):
         if ds.find_set(s) != ds.find_set(e):
             ds.union(s, e)
             mst.append(edge)
+            print(f'현재 parent 상태 : {ds.p}')
+            print(f'현재 rank 상태 : {ds.rank}')
+            print(f'현재 mst 상태 : {mst}')
+            print()
     return mst
 
 '''
@@ -64,19 +69,19 @@ def mst_kruskal(vertices, edges):
          ³
 '''
 # [시작정점, 도착정점, 가중치]
-edges = [[1, 2, 1], [2, 3, 3], [1, 3, 2]]
-vertices = [1, 2, 3]  # 정점 집합
-
-
-'''
-    MST 구성 결과
-         1
-      ¹ / \ ²
-       2   3
-'''
-result = mst_kruskal(vertices, edges)  # [[1, 2, 1], [1, 3, 2]]
-print(result)
-
+# edges = [[1, 2, 1], [2, 3, 3], [1, 3, 2]]
+# vertices = [1, 2, 3]  # 정점 집합
+#
+#
+# '''
+#     MST 구성 결과
+#          1
+#       ¹ / \ ²
+#        2   3
+# '''
+# result = mst_kruskal(vertices, edges)  # [[1, 2, 1], [1, 3, 2]]
+# print(result)
+#
 
 # 교재 간선 정보
 edges = [

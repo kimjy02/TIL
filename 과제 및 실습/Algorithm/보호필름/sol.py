@@ -33,6 +33,42 @@
     출력
         - #{tc} {성능검사를 통과할 수 있는 약품의 최소 투입 횟수}
 '''
+# import sys
+# sys.stdin = open('sample_input.txt')
+
+# 다음 값이 같으면 +1 다르면 append 후 0으로 초기화
+def counting(row_info):
+    count_list = [[] for _ in range(W)]
+    for i in range(W):
+        cnt = 1
+        for j in range(D):
+            if j == 0:
+                continue
+            else:
+                if row_info[i][j] == row_info[i][j - 1]:
+                    cnt += 1
+                    if j == D - 1:
+                        count_list[i].append(cnt)
+                else:
+                    count_list[i].append(cnt)
+                    cnt = 1
+                    if j == D - 1:
+                        count_list[i].append(cnt)
+    return count_list
+
+def searching(count_list, K_low_list, change_cnt, max_list, info):
+    # count_list 리스트 안 각 리스트 값 중 가장 큰 값이 K보다 작은 리스트만 따로 저장
+    for lst in count_list:
+        if max(lst) < K:
+            K_low_list.append(lst)
+            max_list.append(max(lst))
+    if len(K_low_list) == 0:
+        return change_cnt
+    else:
+        if D//K > 2:
+            pass
+        else:
+
 
 T = int(input())
 
@@ -44,4 +80,8 @@ for tc in range(1, T+1):
     for i in range(D):
         for j in range(W):
             row_info[j][i] = info[i][j]
-    # print(row_info)
+    count_list = counting(row_info)
+    K_low_list = []
+    change_cnt = 0
+    max_list = []
+
