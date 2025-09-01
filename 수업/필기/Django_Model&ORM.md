@@ -54,12 +54,12 @@ class Article(models.Model):
 2. model Field 클래스
   - 테이블 필드의 "데이터 타입"
 
-  ![model Field 클래스](./Django/Model_Field_class.png)
+    ![model Field 클래스](./Django/Model_Field_class.png)
 
 3. model Field 클래스의 키워드 인자(필드 옵션)
   - 테이블 필드의 "제약조건" 관련 설정
 
-  ![model Field 클래스의 키워드 인자](./Django/Model_Field_class_Keyword_para.png)
+    ![model Field 클래스의 키워드 인자](./Django/Model_Field_class_Keyword_para.png)
 
 #### 제약 조건
 - 데이터가 올바르게 저장되고 관리되도록 하기 위한 규칙
@@ -93,8 +93,15 @@ class Article(models.Model):
 class Article(models.Model):
   title = models.CharField(max_length=10)
   content = models.TextField()
+<<<<<<< HEAD
   created_at = models.DateTimeField(auto_now_add = True) ## 생설될 때만 저장
   updated_at = models.DateTimeField(auto_now = True) ## 업데이트될 때마다 저장
+=======
+  # 객체가 처음 생성될 때 한 번만 현재 시간을 자동으로 기록 <수정할 때는 값이 바뀌지 않음>
+  created_at = models.DateTimeField(auto_now_add = True)
+  # 객체가 저장될 때마다 현재 시간을 자동으로 기록 <수정될 때마다 갱신>
+  updated_at = models.DateTimeField(auto_now = True)
+>>>>>>> 979610a7bb2d43f00afd8876628838adf6e63a36
 ```
 
 - 이미 기존 테이블이 존재하기 때문에 필드를 추가할 때 필드의 기본값 설정이 필요
@@ -124,6 +131,48 @@ class Article(models.Model):
 ### 모델 필드
 #### Model Field
 - DB 테이블의 필드(열)을 정의하며, 해당 필드에 저장되는 데이터 타입과 제약조건을 정의
+
+#### CharField()
+- 길이의 제한이 있는 문자열을 넣을 때 사용 (필드의 최대 길이를 결정하는 max_length는 필수 인자)
+
+#### TextField()
+- 글자의 수가 많을 때 사용
+
+#### DateTimeField()
+- 날짜와 시간을 넣을 때 사용
+
+### Admin site
+#### Automatic admin interface
+- Django는 추가 설치 및 설정 없이 자동으로 관리자 인터페이스를 제공
+- > 데이터 확인 및 테스트 등을 진행하는 데 매우 유용
+
+#### 1. admin 계정 생성
+- email은 선택사항이기 때문에 입력하지 않고 진행 가능
+- 비밀번호 입력 시 보안상 터미널에 출력되지 않으니 무시하고 입력 이어가기
+- `$ python manage.py createsuperuser`
+
+#### 2. DB에 생성된 admin 계정 확인
+  ![DB에 생성된 admin 계정 확인](./Django/check_admin_id_in_DB.png)
+
+#### 3. admin에 모델 클래스 등록
+- admin.py에 작성한 모델 클래스를 등록해야만 admin site에서 확인 가능
+  ```python
+  # articles/admin.py
+
+  from django.contrib import admin
+  from .models import Article
+
+  admin.site.register(Article)
+  ```
+
+#### 4. admin site 로그인 후 등록된 모델 클래스 확인
+  ![admin site 로그인 후 등록된 모델 클래스 확인](./Django/check_entered_model_class.png)
+
+#### 5. 데이터 생성, 수정, 삭제 테스트
+  ![데이터 생성, 수정, 삭제 테스트](./Django/data_create_alter_delete_test.png)
+
+#### 6. 테이블 확인
+  ![테이블 확인](./Django/check_table.png)
 
 ## 4. ORM
 #### ORM (Object - Relational - Mapping)
@@ -159,6 +208,84 @@ class Article(models.Model):
 #### QuerySet API는 python의 모델 클래스와 인스턴스를 활용해 DB에 데이터를 저장, 조회, 수정, 삭제하는 것
 
 ### QuerySet API 실습
+#### Postman 설치 및 안내
+
+#### URL과 HTTP requests methods 설계
+|             | GET | POST | PUT | DELETE |
+|:-----------:|:----------:|:----:|:----:|:----:|
+|  articles/  | 전체 글 조회 | 글 작성 |  |  |
+| articles/1/ | 1번 글 조회 |  | 1번 글 수정 | 1번 글 삭제 |
+
+#### 스켈레톤 프로젝트 안내
+1. 가상 환경 생성, 활성화 및 패키지 설치
+  - 외부 패키지 및 라이브러리는 `requirements.txt`에 작성되어 있음
+    ```bash
+    $ python -m venv venv
+    $ source venv/Scripts/activate
+    $ pip install -r requirements.txt
+    ```
+2. migrate 진행
+    ```bash
+    $ python manage.py makemigrations
+    $ python manage.py migrate
+    ```
+
+3. 프로젝트는 '주석을 해제'하며 진행
+
+#### Skeleton code 살펴보기
+- `config/urls.py` 확인
+  ```python
+  # config/urls.py
+
+  urlpatterns = [
+    path("admin/", admin.site.urls),
+    # path('articles', include('articles.urls')),
+  ]
+  ```
+  - > <span style='color:red'>QuerySet API 실습에는 articles app을 사용함</span>
+  
+- `articles/urls.py` 확인
+  ```python
+  # config/urls.py
+
+  urlpatterns = [
+    # path('new/', views.article_create), 
+    # path('list/', views.article_list),
+    # path('<int:pk>/', views.article_detail),
+    # path('<int:pk>/edit/', views.article_update),
+    # path('<int:pk>/delete/', views.article_delete),
+  ]
+  ```
+  - > <span style='color:red'>QuerySet API 실습에는 articles app을 사용함</span>
+
+  - Article Model 클래스 확인
+    ```python
+    # articles/models.py
+
+    class Article(models.Model):
+      title = models.CharField(max_length=100)
+      content = models.TextField()
+
+      def __str__(self):
+        return self.title
+    ```
+
+### Create
+#### 데이터 객체를 만드는(생성하는) 3가지 방법
+1. 첫번째 방법
+    ```python
+    article = Article() # Article(class)로부터 article(instance) 생성 후 저장
+    # print(type(article)) # <class 'articles.models.Article'>
+
+    # 클라이언트가 요청에 담아 보낸 데이터를 인스턴스 변수에 할당
+    article.title = request.data.get('title')
+    article.content = request.data.get('content')
+
+    article.save()  # save를 해야 데이터베이스에 저장이 된다.
+    print('article.id:', article.id) # article.id : 1
+    ```
+2. p.67
+
 
 ## 5. Django Serializer
 ### 개요
