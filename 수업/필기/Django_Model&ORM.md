@@ -93,15 +93,15 @@ class Article(models.Model):
 class Article(models.Model):
   title = models.CharField(max_length=10)
   content = models.TextField()
-  created_at = models.DateTimeField(auto_now_add = True) ##
-  updated_at = models.DateTimeField(auto_now = True) ##
+  created_at = models.DateTimeField(auto_now_add = True) ## 생설될 때만 저장
+  updated_at = models.DateTimeField(auto_now = True) ## 업데이트될 때마다 저장
 ```
 
 - 이미 기존 테이블이 존재하기 때문에 필드를 추가할 때 필드의 기본값 설정이 필요
-- 1번은 현재 대화를 유지하면서 직접 기본값을 입력하는 방법
   ```bash
   $ python manage.py makemigrations
   ```
+- 1번은 현재 대화를 유지하면서 직접 기본값을 입력하는 방법
 - 2번은 현재 대화에서 나간 후 models.py에 기본값 관련 설정을 하는 방법
   ![대화에서 나간 후 기본값 설정](./Django/default_setting_out.png)
 
@@ -172,7 +172,7 @@ class Article(models.Model):
 #### Serializer
   - Serialization을 진행하여 Serialized data를 반환해주는 클래스
 
-#### MOdelSerializer
+#### ModelSerializer
   - Django 모델과 연결된 Serializer 클래스
     - > 일반 Serializer와 달리 사용자 입력 데이터를 받아 자동으로 모델 필드에 맞추어 Serialization을 진행
 
