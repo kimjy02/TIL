@@ -1,6 +1,7 @@
--- DML
-USE db_intro;
+-- CREATE DATABASE db_intro;
+-- USE db_intro;
 
+-- DML
 -- table 사전 준비
 CREATE TABLE articles (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -12,9 +13,23 @@ CREATE TABLE articles (
 -- Insert 활용 1
 -- 데이터 추가하기
 INSERT INTO 
+  articles (id, title, content, createdAt)
+VALUES 
+  (1, 'hello', 'world', '2000-01-01');
+
+INSERT INTO 
   articles (title, content, createdAt)
 VALUES 
   ('hello', 'world', '2000-01-01');
+
+-- INSERT INTO 
+--   articles 
+-- VALUES (10, 'hello', 'world', '2000-01-01');
+
+-- INSERT INTO 
+--   articles (content, title, createdAt)
+-- VALUES 
+--   ('hello', 'world', '2000-01-01');
 
 -- articles 테이블 전체 조회
 SELECT * FROM articles;
@@ -61,6 +76,14 @@ SET
   content = 'update Content'
 WHERE
   id = 2;
+
+
+-- 전체 ROW에 대해서 수정
+UPDATE
+  articles
+SET
+  title = 'SQL 재미따';
+  
 
 SELECT * FROM articles;
 
