@@ -1,0 +1,42 @@
+'''
+    모든 원소가 양의 정수인 집합
+    원소를 거꾸로 뒤집고 그 원소를 오름차순으로 정렬하는 프로그램
+    (단, 원소를 뒤집었을 때 0이 앞에 선행되는 경우는 0을 생략해야 함)
+
+    [입력]
+        1. n : 입력받을 원소의 개수
+        2. 원소값 n개 [입력하는 줄에 하나의 원소값 뿐 아니라 여러 원소값이 들어갈 수 있음]
+           [단, 10^12를 넘어선 안됨]
+
+
+'''
+arr = []
+answer = []
+while len(arr) == 0 or len(arr) < n:
+    num = list(map(int, input().split()))
+    if not arr:
+        n = num.pop(0)
+    arr.extend(num)
+
+# print(n, arr)
+
+for number in arr:
+    lst = []
+    lst.extend(str(number).strip())
+    # print(lst)
+    if len(lst) == 1:
+        pass
+    else:
+        while lst:
+            if lst[len(lst)-1] == '0':
+                lst.pop()
+            else:
+                break
+        for i in range(len(lst) // 2):
+            lst[i], lst[len(lst)-1-i] = lst[len(lst)-1-i], lst[i]
+
+    answer.append(int(''.join(lst)))
+
+answer.sort()
+for ans in answer:
+    print(ans)
