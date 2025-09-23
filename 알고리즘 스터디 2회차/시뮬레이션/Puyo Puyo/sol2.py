@@ -1,23 +1,63 @@
-lines = [list(map(str, input().strip())) for _ in range(12)]
-
 from collections import deque
 
-queue = deque()
+H, W = 12, 6
+board = [list(input().strip()) for _ in range(H)]
 
-color_list = ['R', 'G', 'B', 'P', 'Y']
+dr = [1, -1, 0, 0]
+dc = [0, 0, 1, -1]
 
-queue.append(lines[11][0], 11, 0)
+def bfs(sr, sc, visited):
+    color = board[sr][sc]
+    if color == '.':
+        return []
+    q = deque([(sr, sc)])
+    visited[sr][sc] = True
+    group = [(sr, sc)]
+    while q:
+        r, c = q.popleft()
+        for k in range(4):
+            nr, nc = r + dr[k], c + dc[k]
+            if 0 <= nr < H and 0 <= nc < W and not visited[nr][nc] and board[nr][nc] == color:
+                visited[nr][nc] = True
+                q.append((nr, nc))
+                group.append((nr, nc))
+    return group
 
-# 4개 이상 모이면 count += 1
-# 여러 그룹이 있다면 동시에 터지고 여러 그룹이 터지더라도 count += 1
+def apply_gravity():
+    # 각 열에 대해 아래부터 채우기
+    for c in range(W):
+        write = H - 1
+        for r in range(H - 1, -1, -1):
+            if board[r][c] != '.':
+                board[write][c] = board[r][c]
+                if write != r:
+                    board[r][c] = '.'
+                write -= 1
+        # 위쪽 남은 칸을 모두 '.'
+        for r in range(write, -1, -1):
+            board[r][c] = '.'
 
-while queue:
-    value, r, c = queue.popleft()
-    if value == '.' and len(set(lines[r])) == 1:
-        continue
-    else:
-        if value == '.':
-            pass
-        else :
+chain = 0
+while True:
+    visited = [[False]*W for _ in range(H)]
+    to_burst = set()
+    for i in range(H):
+        for j in range(W):
+            if board[i][j] != '.' and not visited[i][j]:
+                group = bfs(i, j, visited)
+                if len(group) >= 4:
+                    to_burst.update(group)
 
-            queue.append(lines[r][c+1], r, c+1)
+    if not to_burst:
+        break  # 더 이상 터질 게 없으면 종료
+
+    # 동시에 제거
+    for r, c in to_burst:
+        board[r][c] = '.'
+
+    # 중력 적용
+    apply_gravity()
+
+    chain += 1
+
+print(chain)
