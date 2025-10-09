@@ -1,6 +1,6 @@
 # K, N = map(int, input().split())
 #
-# import itertools
+import itertools
 #
 # lst = list(range(1, K+1))
 #
@@ -15,3 +15,5 @@ e = [[1,1], [3,1], [4,1], [7,1], [5,1]]
 lst = [1, 2, 3, 4, 5]
 # print(e[:][0].index(lst[2]))
 print(e[,0])
+
+itertools.per
