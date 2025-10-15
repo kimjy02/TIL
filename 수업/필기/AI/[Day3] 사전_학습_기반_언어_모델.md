@@ -97,14 +97,35 @@
   ![alt text](image-95.png)
   ![alt text](image-96.png)
 
+
+#### BERT의 학습 방법 2 - Next Sentence PRediction (NSP)
+- 또한, BERT는 입력을 두 개의 연속된 텍스트로 받아, **두번째 문장이 첫번째 문장의 실제 다음 문장인지 여부를 예측**하는 <span style='color:green'>Next Sentence Prediction (NSP)</span>을 수행했다.
   ![alt text](image-97.png)
 
+#### BERT의 학습 방법 2 - Next Sentence Prediction (NSP)
+- NSP를 통해 문장 간 관계를 학습하여 문맥적 추론 및 문장 수준 이해 태스크에 도움이 되도록 설계되었다.
+- 예시 :
+  - 자연어 추론(Natural Language Inference)
+  - Paraphrase detection
+  - 질의응답 (Question Answering)
   ![alt text](image-98.png)
-
   ![alt text](image-99.png)
 
+#### BERT의 다운스트림 태스크
+- BERT는 이렇게 MLM과 NSP 두 가지 태스크를 동시에 학습한다.
+- [CLS] 토큰은 NSP 태스크 용으로 학습되며, 다른 토큰들은 MLM 태스크 용으로 학습된다.
   ![alt text](image-100.png)
 
+#### BERT의 다운스트림 태스크 - Sentence Level
+- 두 문장 관계 분류 태스크 :
+  - MNLI
+    - 전제(Premise) : 여러 남자들이 뛰고 있는 축구 경기
+    - 가설(Hypothesis) : 몇몇 남자들이 스포츠를 하고 있다.
+    - 분류 : { <span style='color:green'>함의(Entailment)</span>, 모순(Contradiction), 중립(Neutral)}
+  - QQP
+    - Q1 : 주식 투자 방법은 어디서 배울 수 있나요?
+    - Q2 : 주식에 대해 더 배우려면 어떻게 해야 하나요?
+    - 분류 : { <span style='color:green'>중복(Duplicate)</span>, 비중복(Not Duplicate)}
   ![alt text](image-101.png)
 
   ![alt text](image-102.png)
