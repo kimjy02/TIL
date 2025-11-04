@@ -67,3 +67,5 @@ print(min_value2)
 
 # print(min_value)
 
+
+
