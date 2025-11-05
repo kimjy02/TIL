@@ -42,7 +42,8 @@ def pathing():
                 else:
                     print(time + 1)
                     return
-        
+        print(path)
+        print(fire)
     print('IMPOSSIBLE')
 
 
