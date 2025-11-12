@@ -19,5 +19,6 @@ while True:
             result.append(a[ni][nj])
             r, c = ni, nj
             find = True
+            break
 
 print(*result)
