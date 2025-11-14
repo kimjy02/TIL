@@ -4,12 +4,9 @@ T = int(input())
 for tc in range(1, T+1):
     N, M = map(int, input().split())
 
-    sum = 0
-    for i in range(N):
-        sum += 2**i
-    comparison = list((bin(sum & M).split('0b'))[1].strip())
-    print(comparison)
-    if '0' in comparison:
-        print(f'#{tc} OFF')
-    else:
+    mask = (1 << N) - 1
+    if (M & mask) == mask:  # 하위 N비트가 전부 1인가?
         print(f'#{tc} ON')
+    else:
+        print(f'#{tc} OFF')
+
